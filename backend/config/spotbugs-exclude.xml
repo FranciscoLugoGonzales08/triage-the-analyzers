@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- SpotBugs project decisions: a rule, or a rule in part of the code, that the team has decided not
-     to enforce. One Match per decision, with a comment giving the reason, for example:
-
-       <!- - JPA entities share associations by design (reason ...) - ->
-       <Match><Package name="~team\.projectpulse\..*"/><Bug pattern="EI_EXPOSE_REP"/></Match>
-
-     Unlike the baseline, this file may grow, but every entry is a reviewed decision. -->
+<!-- SpotBugs project decisions: rules, or rules in part of the code, that the team has decided not
+     to enforce. Unlike the baseline, this file may grow, but every entry is a reviewed decision. -->
 <FindBugsFilter>
+  <!-- JPA entities deliberately expose and accept ORM-managed relationships so Hibernate can maintain
+       entity identity and bidirectional associations. Keep EI_EXPOSE_REP checks enabled for DTOs and
+       other non-entity types, where exposing mutable collections can leak representation. -->
+  <Match>
+    <Annotation name="jakarta.persistence.Entity"/>
+    <Bug pattern="EI_EXPOSE_REP"/>
+  </Match>
+  <Match>
+    <Annotation name="jakarta.persistence.Entity"/>
+    <Bug pattern="EI_EXPOSE_REP2"/>
+  </Match>
+  <!-- Spring-managed components retain constructor-injected singleton collaborators by design; this
+       does not exempt their getters, setters, or constructors in non-Spring-managed DTO/value types. -->
+  <Match>
+    <Annotation name="~org\.springframework\.(stereotype\.(Component|Service|Repository)|web\.bind\.annotation\.(RestController|Controller)|context\.annotation\.Configuration)"/>
+    <Method name="&lt;init&gt;"/>
+    <Bug pattern="EI_EXPOSE_REP2"/>
+  </Match>
+  <!-- Spring Security's UserDetails principal wraps the managed user object for authentication and token creation. -->
+  <Match>
+    <Class name="team.projectpulse.user.MyUserPrincipal"/>
+    <Bug pattern="EI_EXPOSE_REP"/>
+  </Match>
+  <Match>
+    <Class name="team.projectpulse.user.MyUserPrincipal"/>
+    <Bug pattern="EI_EXPOSE_REP2"/>
+  </Match>
 </FindBugsFilter>

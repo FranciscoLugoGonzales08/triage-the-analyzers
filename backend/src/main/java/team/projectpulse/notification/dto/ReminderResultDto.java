@@ -12,4 +12,8 @@ public record ReminderResultDto(SubmittableItem item,
                                 String week,
                                 int sent,
                                 List<OwingStudentDto> failed) {
+
+    public ReminderResultDto {
+        failed = failed == null ? null : List.copyOf(failed);
+    }
 }

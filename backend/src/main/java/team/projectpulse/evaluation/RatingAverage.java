@@ -7,6 +7,7 @@ public class RatingAverage {
 
 
     public RatingAverage() {
+        // Retained for object-mapper binding of report data.
     }
 
     public RatingAverage(Integer criterionId, Double averageScore) {

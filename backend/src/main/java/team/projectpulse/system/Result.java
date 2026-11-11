@@ -16,6 +16,7 @@ public class Result {
 
 
     public Result() {
+        // Retained for object-mapper deserialization of the API envelope.
     }
 
     public Result(boolean flag, Integer code, String message) {

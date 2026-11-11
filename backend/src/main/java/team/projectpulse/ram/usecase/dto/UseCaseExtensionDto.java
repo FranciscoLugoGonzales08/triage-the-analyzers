@@ -11,4 +11,8 @@ public record UseCaseExtensionDto(
         ExtensionKind kind,
         ExtensionExit exit,
         List<UseCaseExtensionStepDto> steps) {
+
+    public UseCaseExtensionDto {
+        steps = steps == null ? null : List.copyOf(steps);
+    }
 }

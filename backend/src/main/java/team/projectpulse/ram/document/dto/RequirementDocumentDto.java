@@ -16,4 +16,8 @@ public record RequirementDocumentDto(Long id,
                                      List<DocumentSectionDto> sections,
                                      DocumentStatus status,
                                      Integer version) {
+
+    public RequirementDocumentDto {
+        sections = sections == null ? null : List.copyOf(sections);
+    }
 }

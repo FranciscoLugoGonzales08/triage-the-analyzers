@@ -35,9 +35,6 @@ public class Comment {
     private Instant updatedAt;
 
 
-    public Comment() {
-    }
-
     public Long getId() {
         return id;
     }
@@ -79,4 +76,3 @@ public class Comment {
     }
 
 }
-

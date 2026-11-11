@@ -19,11 +19,11 @@ public class DocumentTemplate {
     }
 
     public List<SectionTemplate> getSections() {
-        return sections;
+        return sections == null ? null : List.copyOf(sections); // NOPMD - Preserve null when the YAML template omits sections.
     }
 
     public void setSections(List<SectionTemplate> sections) {
-        this.sections = sections;
+        this.sections = sections == null ? null : List.copyOf(sections);
     }
 
     public static class SectionTemplate {
